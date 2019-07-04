@@ -118,6 +118,7 @@ class Payment extends Component{
 
 
       render() {
+        const {navigate} = this.props.navigation;
           const {totalAmount} = this.props;
           return (
               <View>
