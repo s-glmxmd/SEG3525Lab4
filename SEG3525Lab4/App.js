@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-<<<<<<< HEAD
 import Payment from './Pages/Payment';
-=======
 import Home from './components/Home'
 import Search from './components/Search'
 import Navbar from './components/navbar'
->>>>>>> c011d5a120e6641d413edbd29055a7de74c7385b
 
 export function App() {
   return (
@@ -27,8 +24,4 @@ const styles = StyleSheet.create({
   },
 });
 
-<<<<<<< HEAD
-
 export default Payment;
-=======
->>>>>>> c011d5a120e6641d413edbd29055a7de74c7385b
