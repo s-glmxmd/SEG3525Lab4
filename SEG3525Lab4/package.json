@@ -16,7 +16,11 @@
     "react-native-navbar": "^2.1.0",
     "react-native-payment-gateway": "^0.4.3",
     "react-native-safe-area-view": "^0.14.6",
+    "react-native-tear-lines": "^1.0.3",
     "react-native-web": "^0.11.4",
+    "react-navigation": "^3.11.0",
+    "react-redux": "^7.1.0",
+    "redux": "^4.0.1",
     "styled-components": "^4.3.2"
   },
   "devDependencies": {

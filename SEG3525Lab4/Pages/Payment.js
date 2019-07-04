@@ -103,19 +103,7 @@ class Payment extends Component{
     }
 
     static navigationOptions = {
-        title: (<PrimaryText style={{ flex: 1, paddingTop: 10}}> Make Payment</PrimaryText>),
-        headerStyle: {
-          backgroundColor: '#1c1d20',
-          borderBottomWidth: 1,
-          borderStyle: 'solid',
-          borderColor: '#1c1d20',
-        },
-        headerTintColor: '#000',
-        headerTitleStyle: {
-          fontWeight: 'bold',
-        },
-        headerBackTitle: 'Home',
-        headerLeft: null,
+        title: 'Payment',
       };
 
       constructor(props) {
