@@ -20,11 +20,8 @@
     "react-native-tear-lines": "^1.0.3",
     "react-native-web": "^0.11.4",
     "react-navigation": "^3.11.0",
-<<<<<<< HEAD
     "react-redux": "^7.1.0",
     "redux": "^4.0.1",
-=======
->>>>>>> d2c572563e6df9c8067a882a43dc4c2939a5cb15
     "styled-components": "^4.3.2"
   },
   "devDependencies": {
