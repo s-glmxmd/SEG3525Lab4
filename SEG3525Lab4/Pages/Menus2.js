@@ -95,7 +95,7 @@ class Menus2 extends Component{
                     color="blue"></Button>
                 </View> 
                 <Button
-                    onPress={() => navigate('Payment')}
+                    onPress={() => navigate('Orders')}
                     title="View Cart"
                     color="blue"></Button>
             </View>

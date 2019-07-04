@@ -72,13 +72,6 @@ class HomePage extends Component{
         const {navigate} = this.props.navigation;
           return (
             <View style={styles.container}>
-              {/* <NavigationBar 
-                //componentLeft     = { () =>  <ComponentLeft />   }
-                componentCenter   = { () =>  <ComponentCenter /> }
-                componentRight    = { () =>  <ComponentRight />  }
-                navigationBarStyle= {{ backgroundColor: '#215e79' }}
-                statusBarStyle    = {{ barStyle: 'light-content', backgroundColor: '#215e79' }}
-                /> */}
               <View style={styles.welcome}>
                 <Text>Welcome to Restaurant App!</Text>
               </View>

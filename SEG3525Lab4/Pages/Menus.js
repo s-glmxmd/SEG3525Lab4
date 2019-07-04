@@ -9,38 +9,11 @@ import {
   ScrollView,
   TouchableOpacity,
   Button,
+  AsyncStorage,
 } from 'react-native';
 import { NavigationBar } from 'navigationbar-react-native';
 
-
-const ComponentLeft = () => {
-  return(
-    <View style={{ flex: 1, alignItems: 'flex-start'}} >
-       <TouchableOpacity style={ {justifyContent:'center', flexDirection: 'row'}}>
-        <Text style={{ color: 'white', marginLeft: 20, }}>Back</Text>
-      </TouchableOpacity>
-    </View>
-  );
-};
- 
-const ComponentCenter = () => {
-  return(
-    <View style={{ flex: 1, }}>
-       <Text style={{color: 'white', alignSelf: 'center' }}>Menu</Text>
-    </View>
-  );
-};
- 
-const ComponentRight = () => {
-  return(
-    <View style={{ flex: 1, alignItems: 'flex-end', }}>
-      <TouchableOpacity>
-        <Text style={{ color: 'white', marginRight: 20, }}> Cart </Text>
-      </TouchableOpacity>
-    </View>
-  );
-};
-
+const STORAGE_KEY = 'ASYNC_STORAGE_NAME_EXAMPLE'
 
 const styles = StyleSheet.create({
   container: {
@@ -57,31 +30,69 @@ const styles = StyleSheet.create({
   },
 });
 
+_retrieveData = async () => {
+  try {
+    const value = await AsyncStorage.getItem('TASKS');
+    console.log("something"+value);
+    if (value !== null) {
+      // We have data!!
+      console.log(value);
+    }
+  } catch (error) {
+    // Error retrieving data
+  }
+};
+
+
+
 class Menus extends Component{
   static navigationOptions = {
     title: 'Menus',
   };
 
+  load = async () => {
+    try {
+      const name = await AsyncStorage.getItem(STORAGE_KEY)
 
+      if (name !== null) {
+        this.setState({name})
+      }
+    } catch (e) {
+      console.error('Failed to load name.')
+    }
+  }
 
+  // save = async (name) => {
+  //   try {
+  //     await AsyncStorage.setItem(STORAGE_KEY, name)
+
+  //     this.setState({name})
+  //   } catch (e) {
+  //     console.error('Failed to save name.')
+  //   }
+  // }
 
       render() {
         const {navigate} = this.props.navigation;
           return (
             <View style={styles.container}>
-              {/* <NavigationBar 
-                componentLeft     = { () =>  <ComponentLeft />   }
-                componentCenter   = { () =>  <ComponentCenter /> }
-                componentRight    = { () =>  <ComponentRight />  }
-                navigationBarStyle= {{ backgroundColor: '#215e79' }}
-                statusBarStyle    = {{ barStyle: 'light-content', backgroundColor: '#215e79' }}
-                /> */}
+
                 <Text style={styles.restaurantTitle}>El Locos tacos</Text>
                 <View style={{height: '20%', backgroundColor: 'powderblue'}}>
                     <Text style={styles.restaurantTitle}>Taco Pizza</Text>
                     <Text style={styles.restaurantText}>Prix: $11.25 </Text>
                     <Button
-                    //onPress={onPressLearnMore}
+                    onPress={
+                      async (name) => {
+                        try {
+                          await AsyncStorage.setItem(STORAGE_KEY, name)
+                    
+                          this.setState({name})
+                        } catch (e) {
+                          console.error('Failed to save name.')
+                        }
+                      }
+                    }
                     title="Add to Cart"
                     color="blue"></Button>
                 </View> 
@@ -90,12 +101,12 @@ class Menus extends Component{
                     <Text style={styles.restaurantTitle}>Regular Tacos</Text>
                     <Text style={styles.restaurantText}>Prix: $5.25  </Text>
                     <Button
-                    //onPress={onPressLearnMore}
+                    //onPress={console.log(console.log(value))}
                     title="Add to Cart"
                     color="blue"></Button>
                 </View> 
                 <Button
-                    onPress={() => navigate('Payment')}
+                    onPress={() => navigate('Orders')}
                     title="View Cart"
                     color="blue"></Button>
             </View>

@@ -11,9 +11,9 @@ import BillReceipt from '../components/Receipt';
 import ViewRow from '../components/ViewRow';
 
 class Order extends Component{ 
-  // static navigationOptions = {
-  //   title: 'Order',
-  // };
+  static navigationOptions = {
+    title: 'Order',
+  };
 
     constructor(props){
         super(props);

@@ -7,7 +7,7 @@ import Restaurants from './Pages/Restaurants';
 import Menus from './Pages/Menus';
 import Menus2 from './Pages/Menus2';
 import Menus3 from './Pages/Menus3';
-import Order from './Pages/Order';
+import Orders from './Pages/Orders';
 import Confirmation from './Pages/Confirmation';
 import Home from './components/Home'
 import Search from './components/Search'
@@ -41,7 +41,7 @@ const MainNavigator = createStackNavigator({
   Menu2: {screen: Menus2},
   Menu3: {screen: Menus3},
   Payment: {screen: Payment},
-  Order: {screen: Order},
+  Orders: {screen: Orders},
   // Confirm: {screen: Confirmation},
   
 });
