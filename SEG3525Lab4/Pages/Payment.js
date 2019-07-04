@@ -1,55 +1,106 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import debounce from 'lodash/debounce';
-import { Dimensions, KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
-import { CreditCardInput } from 'react-native-credit-card-input';
+import { Dimensions, KeyboardAvoidingView, Platform, ScrollView, View, StyleSheet, Switch } from 'react-native';
+import { CreditCardInput, LiteCreditCardInput } from "react-native-credit-card-input";
 import styled from 'styled-components';
 import SafeArea from 'react-native-safe-area-view';
 
 import PrimaryText from '../PrimaryText';
 import Colors from '../Colors';
-import AppBase from '../AppBase';
+import RoundButton from '../components/RoundButton';
 
-let totalAmount = 0;
+/**
+ * Données requise afin de valider la form de carte
+ */
+// {
+//     "values": {
+//      "number": "5526 8471 8286 3520",
+//      "expiry": "11/30",
+//      "cvc": "555",
+//      "name": "Full",
+//      "postalCode": "885698",
+//      "type": "master-card"
+//     },
+//     "valid": true,
+//     "status": {
+//      "number": "valid",
+//      "expiry": "valid",
+//      "cvc": "valid",
+//      "name": "valid",
+//      "postalCode": "valid"
+// }
+
+//payment info stuff
+const s = StyleSheet.create({
+    container: {
+      backgroundColor: "#F5F5F5",
+      marginTop: 60,
+    },
+    label: {
+      color: "black",
+      fontSize: 12,
+    },
+    input: {
+      fontSize: 16,
+      color: "black",
+    },
+  });
+
+const windowWidth = Dimensions.get('window').width - 18;
 
 const BR = styled.View`
-  height: ${props => (props.size ? props.size : 20)}
+height: ${props => (props.size ? props.size : 20)}
 `;
 
 const Heading = styled.Text`
-  font-size: 14px;
-  color: #9DA8BA;
-  text-align: center;
-  margin-bottom: 10px;
+font-size: 14px;
+color: #9DA8BA;
+text-align: center;
+margin-bottom: 10px;
 `;
 
 const Subheading = styled.Text`
-  font-size: 16px;
-  color: #213052;
-  text-align: center;
+font-size: 16px;
+color: #213052;
+text-align: center;
 `;
 
 const Section = styled.View`
-  flex-direction: row;
-  justify-content: flex-start;
-  padding: 15px 20px;
-  background: #FFF;
+flex-direction: row;
+justify-content: flex-start;
+padding: 15px 20px;
+background: #FFF;
 `;
 const SectionItem = styled.View`
-  flex: 1;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;  
+flex: 1;
+flex-direction: column;
+justify-content: center;
+align-items: flex-start;  
 `;
+
+const USE_LITE_CREDIT_CARD_INPUT = false;
+
 
 class Payment extends Component{
     
-    _onChange = (form) => {
+    _onChange = formData => {
+        /* eslint no-console: 0 */
+        console.log(JSON.stringify(formData, null, " "));
         this.setState((s, p) => ({
-          cardData: form,
-          validData: form.valid,
-        }));
+            cardData: formData,
+            validData: formData.valid,
+          }));
       };
+    
+      _onFocus = field => {
+        /* eslint no-console: 0 */
+        console.log(field);
+      };
+
+    doPayment = async () => {
+        console.log(button)
+    }
 
     static navigationOptions = {
         title: (<PrimaryText style={{ flex: 1, paddingTop: 10}}> Make Payment</PrimaryText>),
@@ -76,16 +127,17 @@ class Payment extends Component{
           };
       }
 
+
+
       render() {
           const {totalAmount} = this.props;
           return (
-              <AppBase>
-                  <SafeArea>
-
-                    <KeyboardAvoidingView behavior={Platform.OS='ios'? 'padding' : ''}>
-                        <ScrollView bounces={false}>
-                            <BR size={10}/>
-                            <Section>
+              <View>
+            <SafeArea>
+            <KeyboardAvoidingView behavior="padding" enabled> 
+                <ScrollView>
+                    <View>
+                    <Section>
                                 <SectionItem>
                                     <Heading>
                                         {'Order number'.toUpperCase()} 
@@ -127,29 +179,60 @@ class Payment extends Component{
                                     </SectionItem>
                                 </Section>
                             </Section>
-                            <View>
-                                <CreditCardInput
-                                    requiresCVC
-                                    cardScale={1}
-                                    inputContainerStyle={{
-                                        backgroundColor: '#FFF',
-                                        paddingTop: 15,
-                                        paddingBottom: 5,
-                                        flexDirection: 'column',
-                                        paddingLeft: 20,
-                                        paddingRight: 20,
-                                        borderWidth: 1,
-                                        borderColor: '#eee',
-                                        minWidth: 150,
-                                        borderRadius: 6,
-                                    }} 
-                                    onChange={debounce(this._onChange, 500)}
-                                    />
-                            </View>
-                        </ScrollView>
-                    </KeyboardAvoidingView>
-                  </SafeArea>
-              </AppBase>
+                    </View>
+                  { USE_LITE_CREDIT_CARD_INPUT ?
+                    (<LiteCreditCardInput
+                        autoFocus
+                        inputStyle={s.input}
+
+                        validColor={"black"}
+                        invalidColor={"red"}
+                        placeholderColor={"darkgray"}
+
+                        onFocus={this._onFocus}
+                        onChange={this._onChange} />) :
+                        (<CreditCardInput
+                            autoFocus
+
+                            requiresName
+                            requiresCVC
+                            requiresPostalCode
+
+                            labelStyle={s.label}
+                            inputStyle={s.input}
+                            validColor={"black"}
+                            invalidColor={"red"}
+                            placeholderColor={"darkgray"}
+
+                            onFocus={this._onFocus}
+                            onChange={this._onChange} />)
+                    } 
+                    <View>
+                    <RoundButton
+                            loading={this.state.loadingPayment}
+                            title="Continue"
+                            buttonColor={Colors.slateGrey}
+                            onPress={() => this.doPayment()}
+                            disabled={!this.state.validData}
+                            baseStyle={{
+                                marginTop: 40,
+                                margingBottom: Platform.OS === 'ios' ? 100 : 20,
+                            }}
+                            />
+
+                            <RoundButton
+                            title="Cancel"
+                            baseStyle={{
+                                marginTop : 40,
+                                margingBottom : Platform.OS === 'ios' ? 100 : 20,
+                            }}
+                            />
+                    </View>
+                </ScrollView>
+            </KeyboardAvoidingView>
+
+            </SafeArea>
+              </View>
           );
       }
 }
@@ -159,7 +242,7 @@ Payment.defaultProps = {
 };
 
 Payment.propTypes = {
-    //totalAmount: PropTypes.number.isRequired,
+    totalAmount: PropTypes.number.isRequired,
     //doCancelOrder: PropTypes.func.isRequired,
     //createdOrder: PropTypes.object,
 };
