@@ -50,11 +50,10 @@ const ComponentRight = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: 'powderblue',
   },
   welcome: {
     flex: 0,
-    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
     padding: 30,
@@ -62,27 +61,32 @@ const styles = StyleSheet.create({
 });
 
 class HomePage extends Component{
-  // static navigationOptions = {
-  //   title: 'Welcome',
-  // };
+  static navigationOptions = {
+    title: 'Home',
+  };
 
 
 
 
       render() {
-        // const {navigate} = this.props.navigation;
+        const {navigate} = this.props.navigation;
           return (
             <View style={styles.container}>
-              <NavigationBar 
+              {/* <NavigationBar 
                 //componentLeft     = { () =>  <ComponentLeft />   }
                 componentCenter   = { () =>  <ComponentCenter /> }
                 componentRight    = { () =>  <ComponentRight />  }
                 navigationBarStyle= {{ backgroundColor: '#215e79' }}
                 statusBarStyle    = {{ barStyle: 'light-content', backgroundColor: '#215e79' }}
-                />
+                /> */}
               <View style={styles.welcome}>
                 <Text>Welcome to Restaurant App!</Text>
               </View>
+              <Button
+                    onPress={() => navigate('Restaurants')}
+                    title="View Restaurants"
+                    color="blue">
+              </Button>
             </View>
             
           );

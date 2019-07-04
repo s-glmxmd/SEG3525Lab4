@@ -8,6 +8,7 @@ import {
   Platform,
   ScrollView,
   TouchableOpacity,
+  Button,
 } from 'react-native';
 import { NavigationBar } from 'navigationbar-react-native';
 
@@ -25,7 +26,7 @@ const ComponentLeft = () => {
 const ComponentCenter = () => {
   return(
     <View style={{ flex: 1, }}>
-       <Text style={{color: 'white', alignSelf: 'center' }}>Home</Text>
+       <Text style={{color: 'white', alignSelf: 'center' }}>Restaurants</Text>
     </View>
   );
 };
@@ -57,27 +58,34 @@ const styles = StyleSheet.create({
 });
 
 class Restaurants extends Component{
-    
+    static navigationOptions = {
+        title: 'Restaurants',
+      };
 
 
 
 
       render() {
+        const {navigate} = this.props.navigation;
           return (
             <View style={styles.container}>
-              <NavigationBar 
+              {/* <NavigationBar 
                 componentLeft     = { () =>  <ComponentLeft />   }
                 componentCenter   = { () =>  <ComponentCenter /> }
                 componentRight    = { () =>  <ComponentRight />  }
                 navigationBarStyle= {{ backgroundColor: '#215e79' }}
                 statusBarStyle    = {{ barStyle: 'light-content', backgroundColor: '#215e79' }}
-                />
+                /> */}
                 <View style={{height: 200, backgroundColor: 'powderblue'}}>
                     <Text style={styles.restaurantTitle}>El Locos Tacos</Text>
                     <Text style={styles.restaurantText}>Addresse: 2234 rogers rd. 5S5 S5S Ott. Ont. </Text>
                     <Text style={styles.restaurantText}>Cuisine: Lunch </Text>
                     <Text style={styles.restaurantText}>Prix: $2.34 - $22.22 </Text>
                     <Text style={styles.restaurantText}>Heures: 8:00 - 17:00  </Text>
+                    <Button
+                    onPress={() => navigate('Menu')}
+                    title="Visit Menu"
+                    color="blue"></Button>
                 </View> 
                 <View style={{height: 200, backgroundColor: 'skyblue'}}>
                     <Text style={styles.restaurantTitle}>Snow Scones Bros</Text>
@@ -85,6 +93,10 @@ class Restaurants extends Component{
                     <Text style={styles.restaurantText}>Cuisine: Dinner </Text>
                     <Text style={styles.restaurantText}>Prix: $1.34 - $10.85 </Text>
                     <Text style={styles.restaurantText}>Heures: 8:00 - 17:00 </Text>
+                    <Button
+                    onPress={() => navigate('Menu2')}
+                    title="Visit Menu"
+                    color="blue"></Button>
                 </View> 
                 <View style={{height: 200, backgroundColor: 'steelblue'}}>
                     <Text style={styles.restaurantTitle}>Greek'n Eggs</Text>
@@ -92,6 +104,10 @@ class Restaurants extends Component{
                     <Text style={styles.restaurantText}>Cuisine: Breakfast </Text>
                     <Text style={styles.restaurantText}>Prix: $11.34 - $67.87 </Text>
                     <Text style={styles.restaurantText}>Heures: 8:00 - 17:00 </Text>
+                    <Button
+                    onPress={() => navigate('Menu3')}
+                    title="Visit Menu"
+                    color="blue"></Button>
                 </View> 
             </View>
             
